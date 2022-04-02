@@ -17,6 +17,14 @@ export default class Camera extends Component {
         const photoBased64 = this.cameraRef.current.getScreenshot();
         this.setState({ capturedStatus: photoBased64 })
     }
+    onSave = () => {
+        const base64String = this.state.capturedStatus;
+        let aTag = document.createElement("a");
+        aTag.href = base64String;
+        aTag.download = "imdadulWebcamImage.png";
+        aTag.click();
+    }
+
     render() {
         return (
             <Fragment>
@@ -25,7 +33,7 @@ export default class Camera extends Component {
                         <Col className="p-2" md={6} sm={12} lg={6} xs={6}>
                             <Webcam
                                 ref={this.cameraRef}
-                                screenshotFormat='image/jpeg'
+                                screenshotFormat='image/png'
                                 audio={false}
                                 className='w-100 h-75'
                             />
@@ -33,7 +41,7 @@ export default class Camera extends Component {
                         </Col>
                         <Col className="p-2" md={6} sm={12} lg={6} xs={6}>
                             <img className='w-100 h-75' src={this.state.capturedStatus} />
-                            <button className="mt-2 btn saveBtn"> <FaSave className='m-3' /> Save</button>
+                            <button onClick={this.onSave} className="mt-2 btn saveBtn"> <FaSave className='m-3' /> Save</button>
                         </Col>
                     </Row>
                 </Container>
